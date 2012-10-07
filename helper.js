@@ -1,4 +1,6 @@
-// We will compare only objects
+// compares two objects 
+// two objects are equal if all enumerable
+// properties are equal
 if (!Object.compare) {
   var match;
   match = 1;
@@ -13,13 +15,18 @@ if (!Object.compare) {
 }
 
 assert = function(value, expected) {
-  if (!Object.compare(value, expected)) {
-    print("*************************");
-    print("********* ERROR *********");
-    print("*************************");
-    print("");
-    print("Expected: ", expected);
+  if ((typeof value) === "object" && value !== null) {
+    if (!Object.compare(value, expected)) {
+      print("*************************");
+      print("********* ERROR *********");
+      print("*************************");
+      print("");
+      print("Expected: ", expected);
     print("Got:      ", value);
-    quit();
+      quit();
+    }
+  }
+  else {
+    assertEq(value, expected);
   }
 }

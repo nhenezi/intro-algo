@@ -11,7 +11,7 @@ load(deps);
 // ******************************************
 // ****** CHAPTER 2.1 - Insertion sort ******
 // ******************************************
-sort = {};
+var sort = {};
 
 // Collection of test cases for sorting
 sort.testCases = [
@@ -84,3 +84,18 @@ sort.insertion_inc = function(array) {
 };
 
 sort.assert(sort.insertion_inc);
+
+var linear_search = function(array, value) {
+  var i;
+  for (i = 0; i < array.length; i++) {
+    if (array[i] === value) {
+      return i;
+    }
+  }
+  return null;
+};
+
+assert(linear_search([1,2,3,4,5,6,7], 3), 2);
+assert(linear_search([1,5,7,-11,23,64], -11), 3);
+assert(linear_search([], 22), null);
+assert(linear_search([999, 256, 132], 999), 0);
