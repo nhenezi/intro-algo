@@ -127,3 +127,49 @@ sort.selection = function(array) {
 };
 
 sort.assert(sort.selection, "Selection sort");
+
+// ************************************************
+// ****** CHAPTER 2.2 - Designing algorithms ******
+// ************************************************
+
+// 2.3.1 * The devide-and-conquer approach
+
+// merge two arrays
+var merge = function(a, b) {
+  var i, j, c;
+  c = [];
+  i = j = 0;
+  while (i < a.length && j < b.length) {
+    if (a[i] < b[j]) {
+      c.push(a[i]);
+      i++;
+    }
+    else {
+      c.push(b[j]);
+      j++;
+    }
+  };
+
+  for (i; i < a.length; i++) {
+    c.push(a[i]);
+  }
+  for (j; j < b.length; j++) {
+    c.push(b[j]);
+  }
+
+  return c;
+};
+
+assert(merge([1,2],[1,2]), [1,1,2,2,]);
+assert(merge([],[]), []);
+assert(merge([1,2],[]), [1,2]);
+assert(merge([], [1,2]), [1,2]);
+
+sort.merge = function(array) {
+  if (array.length === 1)
+    return array;
+  return merge(sort.merge(array.slice(0, Math.floor(array.length/2))),
+        sort.merge(array.slice(Math.floor(array.length/2))));
+};
+
+sort.assert(sort.merge, "Merge sort");
