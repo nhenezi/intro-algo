@@ -20,7 +20,7 @@ sort.testCases = [
     output:[1],
   },
   {
-    input:[1,3],
+    input:[3,1],
     output:[1,3],
   },
   {
@@ -42,10 +42,11 @@ sort.testCases = [
 ];
 
 // validates sort (based on test cases)
-sort.assert = function(func) {
-  var i;
-  for (i = 0; i < sort.testCases.length; i++) {
-    assert(func(sort.testCases[i].input), sort.testCases[i].output);
+sort.assert = function(func, desc) {
+  var i, testCases;
+  testCases = Object.clone(sort.testCases);
+  for (i = 0; i < testCases.length; i++) {
+    assert(func(testCases[i].input), testCases[i].output, desc);
   }
 };
 
@@ -64,7 +65,7 @@ sort.insertion = function(array) {
   return array;
 };
 
-sort.assert(sort.insertion);
+sort.assert(sort.insertion, "Insertion sort (decrementing)");
 
 
 // Excercise 2.1-2
@@ -83,8 +84,10 @@ sort.insertion_inc = function(array) {
   return array;
 };
 
-sort.assert(sort.insertion_inc);
+sort.assert(sort.insertion_inc, "Insertion sort (incrementing)");
 
+
+// 2.1-3
 var linear_search = function(array, value) {
   var i;
   for (i = 0; i < array.length; i++) {
@@ -99,3 +102,28 @@ assert(linear_search([1,2,3,4,5,6,7], 3), 2);
 assert(linear_search([1,5,7,-11,23,64], -11), 3);
 assert(linear_search([], 22), null);
 assert(linear_search([999, 256, 132], 999), 0);
+
+// ************************************************
+// ****** CHAPTER 2.2 - Analyzing algorithms ******
+// ************************************************
+
+// 2.2-2
+
+sort.selection = function(array) {
+  var i, j, smallest, tmp;
+  for (i = 0; i < array.length; i++) {
+    smallest = i;
+    for (j = i + 1; j < array.length; j++) {
+      if (array[j] < array[smallest]) {
+        smallest = j;
+      }
+    }
+    tmp = array[i];
+    array[i] = array[smallest];
+    array[smallest] = tmp;
+  }
+
+  return array;
+};
+
+sort.assert(sort.selection, "Selection sort");

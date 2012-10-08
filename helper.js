@@ -14,19 +14,55 @@ if (!Object.compare) {
   };
 }
 
-assert = function(value, expected) {
+assert = function(value, expected, description) {
+  description = description || "";
   if ((typeof value) === "object" && value !== null) {
     if (!Object.compare(value, expected)) {
       print("*************************");
       print("********* ERROR *********");
       print("*************************");
-      print("");
+      print("*" + description);
       print("Expected: ", expected);
-    print("Got:      ", value);
-      quit();
+      print("Got:      ", value);
     }
   }
   else {
     assertEq(value, expected);
   }
 }
+
+// pretty print :)
+var pprint = function(obj, indent, key) {
+  var notation;
+  indent = indent || "";
+  key = key || "";
+  if (obj === null || typeof obj !== "object") {
+    print(indent, key, ": ", obj);
+  }
+  else {
+    notation = (obj instanceof Array) ? ["[","]"] : ["{","}"];
+    print(indent + notation[0]);
+    Object.keys(obj).forEach(function(key) {
+      pprint(obj[key], indent + "  ", key);
+    });
+    print(indent + notation[1]);
+  };
+};
+
+// clones all enumerable properties
+if (!Object.clone) {
+  Object.clone = function(obj) {
+    var clone, that;
+    if (obj === null || typeof obj !== "object") {
+      return obj;
+    }
+    else {
+      clone = (obj instanceof Array) ? []:{};
+      Object.keys(obj).forEach(function(key) {
+        clone[key] = Object.clone(obj[key]);
+      });
+      return clone;
+    }
+  };
+}
+
