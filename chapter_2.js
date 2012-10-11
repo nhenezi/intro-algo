@@ -173,3 +173,20 @@ sort.merge = function(array) {
 };
 
 sort.assert(sort.merge, "Merge sort");
+
+// 2-2
+
+sort.bubble = function(array) {
+  var i, j, tmp;
+  for (i = 0; i < array.length; i++) {
+    for (j = i + 1; array.length; i++) {
+      if (array[i] > array[j]) {
+        tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+      }
+    }
+  }
+}
+
+sort.assert(sort.bubble, "Bubble sort");

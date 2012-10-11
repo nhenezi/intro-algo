@@ -15,19 +15,23 @@ if (!Object.compare) {
 }
 
 assert = function(value, expected, description) {
+  var error = 0;
   description = description || "";
   if ((typeof value) === "object" && value !== null) {
     if (!Object.compare(value, expected)) {
-      print("*************************");
-      print("********* ERROR *********");
-      print("*************************");
-      print("*" + description);
-      print("Expected: ", expected);
-      print("Got:      ", value);
+      error = 1;
     }
   }
-  else {
-    assertEq(value, expected);
+  else if (value !== expected) {
+    error = 1;
+  }
+  if (error) {
+    print("*************************");
+    print("********* ERROR *********");
+    print("*************************");
+    print("*" + description);
+    print("Expected: ", expected);
+    print("Got:      ", value);
   }
 }
 
@@ -66,3 +70,5 @@ if (!Object.clone) {
   };
 }
 
+
+pprint(os);
