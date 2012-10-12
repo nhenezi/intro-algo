@@ -179,14 +179,15 @@ sort.assert(sort.merge, "Merge sort");
 sort.bubble = function(array) {
   var i, j, tmp;
   for (i = 0; i < array.length; i++) {
-    for (j = i + 1; array.length; i++) {
-      if (array[i] > array[j]) {
-        tmp = array[i];
-        array[i] = array[j];
-        array[j] = tmp;
+    for (j = array.length - 1; j > i ; j--) {
+      if (array[j] < array[j-1]) {
+        tmp = array[j];
+        array[j] = array[j-1];
+        array[j-1] = tmp;
       }
     }
   }
+  return array;
 }
 
 sort.assert(sort.bubble, "Bubble sort");

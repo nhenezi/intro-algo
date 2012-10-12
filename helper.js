@@ -69,6 +69,3 @@ if (!Object.clone) {
     }
   };
 }
-
-
-pprint(os);
